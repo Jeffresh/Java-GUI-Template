@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 
-    /**
+/**
      * GuiTemplate.java
      * Purpose: this program
      * implements a Gui template that you can modify and adapt easily for any application
@@ -72,9 +72,9 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
                 for(int y=0;y<yMax;y++)
                 {
                     if(matrix[x][y]%2==1)
-                        color = Color.WHITE; // azul
+                        color = Color.WHITE;
                     else if(matrix[x][y]%2==0 && matrix[x][y]!=0)
-                            color = Color.BLACK; // verde
+                            color = Color.BLACK;
                     else
                         color = Color.BLACK;
 
@@ -122,9 +122,9 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     /** */
     private static JMenuBar topToolBar; //topToolBar
     /** */
-    private static JMenu menuFile ; 
+    private static JMenu menuFile ;
     /** */
-    private static JMenu menuAbout ; 
+    private static JMenu menuAbout ;
     /** */
     private static JMenu menuHelp ;
 
@@ -134,18 +134,29 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
      * 
      * @return
      */
+
+
+
     private JMenuBar createBar()
     {
 
+        // TODO: Refactorice this code by fonts and color
+
         topToolBar = new JMenuBar();
         menuFile =  new JMenu("File");
+        menuFile.setFont(new Font("Dialog", Font.PLAIN, 20));
+        menuFile.setForeground(new Color(168, 168, 168));
         menuAbout = new JMenu("Help");
+        menuAbout.setFont(new Font("Dialog", Font.PLAIN, 20));
+        menuAbout.setForeground(new Color(168, 168, 168));
         menuHelp = new JMenu("About");
+        menuHelp.setFont(new Font("Dialog", Font.PLAIN, 20));
+        menuHelp.setForeground(new Color(168, 168, 168));
 
 
         topToolBar.setOpaque(true);
         topToolBar.setBackground(new Color(0,0,0));
-        topToolBar.setPreferredSize(new Dimension(200,20));
+        topToolBar.setPreferredSize(new Dimension(200,40));
 
         topToolBar.add(menuFile);
 
@@ -155,15 +166,29 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 
 
         itemMenu1 = new JMenuItem("Item menu 1");
+        itemMenu1.setFont(new Font("Dialog", Font.PLAIN, 20));
         itemMenu1.addActionListener(this);
         menuFile.add(itemMenu1);
 
         itemMenu2 = new JMenuItem("Item menu 2");
+        itemMenu2.setFont(new Font("Dialog", Font.PLAIN, 20));
         itemMenu2.addActionListener(this);
         menuFile.add(itemMenu2);
 
-        menuHelp.add("Help message");
-        menuAbout.add("Contact message");
+
+        JMenuItem itemMenu3 = new JMenuItem("About Message");
+        itemMenu3.setFont(new Font("Dialog", Font.PLAIN, 20));
+        itemMenu3.addActionListener(this);
+
+        JMenuItem itemMenu4 = new JMenuItem("Help message");
+        itemMenu4.setFont(new Font("Dialog", Font.PLAIN, 20));
+        itemMenu4.addActionListener(this);
+
+
+        menuHelp.add(itemMenu3);
+        menuHelp.setFont(new Font("Dialog", Font.PLAIN, 20));
+        menuAbout.add(itemMenu4);
+        menuAbout.setFont(new Font("Dialog", Font.PLAIN, 20));
 
 
 
@@ -315,21 +340,16 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 
     private static  void createAndShowGUI()
     {
-        frame = new JFrame("CPM-Secuencial");
+        frame = new JFrame("Generic-Gui");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
         frame.setJMenuBar(new GuiTemplate().createBar());
         
         caClassTemplate = new GuiTemplate().new CanvasClassTemplate();
         caClassTemplate.setPreferredSize(new Dimension(1000, 1000));
 
         buttons =  new GuiTemplate().createTextFieldscpmlt();
-        
-
 
         window = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,  caClassTemplate,buttons);
-
         window.setOneTouchExpandable(true);
         
         frame.setMinimumSize(new Dimension(500,500));
@@ -434,18 +454,18 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 	}
 	 public void focusLost(FocusEvent e) 
 	 {
-		
+            String nump;
 	                       
 	        if(e.getSource() == tnumericVar)
 	        {
 
-	            String nump=tnumericVar.getText();
+	            nump = tnumericVar.getText();
 	            numericVar = Double.parseDouble(nump);
 	        }
 
 	        if(e.getSource() == tstringVar)
 	        {
-	            String nump=tstringVar.getText();
+	            nump = tstringVar.getText();
 	            stringVar = nump;
 	        }
 	       
