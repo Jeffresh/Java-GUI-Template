@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -7,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -67,21 +71,18 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 
             int[][] matrix = objectNV.getData();
             
-            for(int x=0;x<xMax;x++)
+            for(int x = 0; x < xMax; x++)
             {
-                for(int y=0;y<yMax;y++)
+                for(int y = 0; y < yMax; y++)
                 {
-                    if(matrix[x][y]%2==1)
+                    if(matrix[x][y] % 2 == 1)
                         color = Color.WHITE;
-                    else if(matrix[x][y]%2==0 && matrix[x][y]!=0)
+                    else if(matrix[x][y] % 2 == 0 && matrix[x][y] != 0)
                             color = Color.BLACK;
                     else
                         color = Color.BLACK;
 
-                    image.setRGB(x,y,color.getRGB());
-
-
-
+                    image.setRGB(x, y, color.getRGB());
                 }
             }
 
@@ -120,7 +121,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     /** */
     private static JSplitPane buttons; //buttons
     /** */
-    private static JMenuBar topToolBar; //topToolBar
+    private static JMenuBar nav_bar; //topToolBar
     /** */
     private static JMenu menuFile ;
     /** */
@@ -145,26 +146,23 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         return top_bar;
     }
 
-    private JMenuBar createBar()
+    @NotNull
+    private Map<String, JMenu> createMenus(@NotNull String [] menu_names, Font font, Color color)
     {
 
-        // TODO: Refactorice this code by fonts and color
+        Map<String, JMenu> menus = new HashMap<>();
 
-        topToolBar = new JMenuBar();
-        menuFile =  new JMenu("File");
-        menuFile.setFont(new Font("Dialog", Font.PLAIN, 20));
-        menuFile.setForeground(new Color(168, 168, 168));
-        menuAbout = new JMenu("Help");
-        menuAbout.setFont(new Font("Dialog", Font.PLAIN, 20));
-        menuAbout.setForeground(new Color(168, 168, 168));
-        menuHelp = new JMenu("About");
-        menuHelp.setFont(new Font("Dialog", Font.PLAIN, 20));
-        menuHelp.setForeground(new Color(168, 168, 168));
+        for (String menu_name : menu_names) {
+            JMenu menu = new JMenu(menu_name);
+            menu.setFont(font);
+            menu.setForeground(color);
+            menus.put(menu_name, menu);
+        }
 
+        return menus;
+    }
 
 
-        topToolBar.setBackground(new Color(0,0,0));
-        topToolBar.setPreferredSize(new Dimension(200,40));
 
     private JMenuBar createNavBar()
     {
@@ -173,16 +171,25 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 
         String [] menu_names = {"File","Help", "About"};
 
+        Map<String, JMenu> menus = createMenus(menu_names, new Font("Dialog", Font.PLAIN, 20),
+                new Color(168, 168, 168));
+
+
+        nav_bar.add(menus.get("File"));
+        nav_bar.add(Box.createHorizontalGlue());
+        nav_bar.add(menus.get("Help"));
+        nav_bar.add(menus.get("About"));
+
 
         itemMenu1 = new JMenuItem("Item menu 1");
         itemMenu1.setFont(new Font("Dialog", Font.PLAIN, 20));
         itemMenu1.addActionListener(this);
-        menuFile.add(itemMenu1);
+        menus.get("File").add(itemMenu1);
 
         itemMenu2 = new JMenuItem("Item menu 2");
         itemMenu2.setFont(new Font("Dialog", Font.PLAIN, 20));
         itemMenu2.addActionListener(this);
-        menuFile.add(itemMenu2);
+        menus.get("File").add(itemMenu2);
 
 
         JMenuItem itemMenu3 = new JMenuItem("About Message");
@@ -194,23 +201,13 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         itemMenu4.addActionListener(this);
 
 
-        menuHelp.add(itemMenu3);
-        menuHelp.setFont(new Font("Dialog", Font.PLAIN, 20));
-        menuAbout.add(itemMenu4);
-        menuAbout.setFont(new Font("Dialog", Font.PLAIN, 20));
-
-
+        menus.get("Help").add(itemMenu3);
+        menus.get("File").setFont(new Font("Dialog", Font.PLAIN, 20));
+        menus.get("About").add(itemMenu4);
+        menus.get("About").setFont(new Font("Dialog", Font.PLAIN, 20));
 
         return nav_bar;
     }
-
-
- 
-
-
-    
-    
-
 
     /**  */
 
@@ -218,8 +215,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     
     /** */
     private static JLabel lnumericVar, lstringVar;
-  
-
 
     /** */
 
@@ -351,7 +346,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     {
         frame = new JFrame("Generic-Gui");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setJMenuBar(new GuiTemplate().createBar());
+        frame.setJMenuBar(new GuiTemplate().createNavBar());
         
         caClassTemplate = new GuiTemplate().new CanvasClassTemplate();
         caClassTemplate.setPreferredSize(new Dimension(1000, 1000));
@@ -392,7 +387,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     private static String stringVar = "Hello World";
 
 
-
+    public void actionPerformed(@NotNull ActionEvent e)
 
     public void actionPerformed(ActionEvent e)
     {
