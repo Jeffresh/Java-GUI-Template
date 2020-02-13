@@ -135,7 +135,15 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
      * @return
      */
 
+    private JMenuBar createTopBar(Color color, Dimension dimension)
+    {
+        JMenuBar top_bar = new JMenuBar();
+        top_bar.setOpaque(true);
+        top_bar.setBackground(color);
+        top_bar.setPreferredSize(dimension);
 
+        return top_bar;
+    }
 
     private JMenuBar createBar()
     {
@@ -154,15 +162,16 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         menuHelp.setForeground(new Color(168, 168, 168));
 
 
-        topToolBar.setOpaque(true);
+
         topToolBar.setBackground(new Color(0,0,0));
         topToolBar.setPreferredSize(new Dimension(200,40));
 
-        topToolBar.add(menuFile);
+    private JMenuBar createNavBar()
+    {
 
-        topToolBar.add(Box.createHorizontalGlue());
-        topToolBar.add(menuHelp);
-        topToolBar.add(menuAbout);
+        nav_bar = createTopBar(new Color(0,0,0),new Dimension(200,40));
+
+        String [] menu_names = {"File","Help", "About"};
 
 
         itemMenu1 = new JMenuItem("Item menu 1");
@@ -192,7 +201,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 
 
 
-        return topToolBar;
+        return nav_bar;
     }
 
 
