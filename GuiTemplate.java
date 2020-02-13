@@ -34,11 +34,10 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     private static BufferedImage image;
     private static int xMax, yMax;
 
-    class CanvasClassTemplate extends JPanel 
+    static class CanvasClassTemplate extends JPanel
     {
 
         private static final long serialVersionUID = 1L;
-
 
 
         /** Object of the class that Needs Visualization (ONV)  */
@@ -226,7 +225,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
      * 
      * @return
      */
-    private JSplitPane createTextFieldscpmlt()
+    private JSplitPane createTextFields()
     {
        
 
@@ -237,9 +236,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         tstringVar = new JTextField();
         tstringVar.setText(stringVar);
         tstringVar.addFocusListener(this);
-
-        
-   
 
         lnumericVar = new JLabel("Numeric Variable: ");
         lnumericVar.setLabelFor(tnumericVar);
@@ -260,12 +256,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         JLabel[] labels = { lnumericVar, lstringVar};
 
         JTextField[] textFields = {tnumericVar, tstringVar}; 
-   
-        
-        
-        // JComboBox[] lists = {listDarkCellDecrease};
 
-        // addLabelTextRows(labels,textFields,new JComboBox,textControlsPane);
         addLabelTextRows(labels,textFields,textControlsPane);
 
         textControlsPane.setBorder(
@@ -300,9 +291,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                               textControlsPane,
                                               botonesPane);
-        
-        
-
 
         splitPane.setOneTouchExpandable(true);
 
@@ -348,10 +336,10 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setJMenuBar(new GuiTemplate().createNavBar());
         
-        caClassTemplate = new GuiTemplate().new CanvasClassTemplate();
+        caClassTemplate = new CanvasClassTemplate();
         caClassTemplate.setPreferredSize(new Dimension(1000, 1000));
 
-        buttons =  new GuiTemplate().createTextFieldscpmlt();
+        buttons =  new GuiTemplate().createTextFields();
 
         window = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,  caClassTemplate,buttons);
         window.setOneTouchExpandable(true);
@@ -388,8 +376,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 
 
     public void actionPerformed(@NotNull ActionEvent e)
-
-    public void actionPerformed(ActionEvent e)
     {
 
 
