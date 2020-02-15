@@ -48,7 +48,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 
         public CanvasClassTemplate()
         {
-        
+
 
             objectNV = new ClassNV(/*parameters*/);
             objectNV.plug(this);
@@ -69,7 +69,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
             Color color;
 
             int[][] matrix = objectNV.getData();
-            
+
             for(int x = 0; x < xMax; x++)
             {
                 for(int y = 0; y < yMax; y++)
@@ -88,7 +88,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
             return image;
         }
 
-      
+
         @Override
         protected void paintComponent(Graphics g)
         {
@@ -121,16 +121,9 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     private static JSplitPane buttons; //buttons
     /** */
     private static JMenuBar nav_bar; //topToolBar
-    /** */
-    private static JMenu menuFile ;
-    /** */
-    private static JMenu menuAbout ;
-    /** */
-    private static JMenu menuHelp ;
 
 
-
-    /**
+    /** Creates Top navigation base bar
      * 
      * @return
      */
@@ -161,49 +154,45 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         return menus;
     }
 
+    private void createMenuItems(Map<String,JMenu> menus, Map<String,String[]> items, Font font)
+    {
+        JMenuItem item;
+        for(Map.Entry<String,String[]> menu: items.entrySet()){
+            for(String item_name :menu.getValue()) {
+                item = new JMenuItem(item_name);
+                item.setFont(font);
+                item.addActionListener(this);
+                menus.get(menu.getKey()).add(item);
+            }
+        }
 
+    }
 
     private JMenuBar createNavBar()
     {
 
-        nav_bar = createTopBar(new Color(0,0,0),new Dimension(200,40));
+        Font menu_font = new Font("Dialog", Font.PLAIN, 20);
+        Color menu_font_color = new Color(168, 168, 168);
+        Color navbar_color = new Color(0,0,0);
+        Dimension navbar_dimension = new Dimension(200,40);
 
         String [] menu_names = {"File","Help", "About"};
 
-        Map<String, JMenu> menus = createMenus(menu_names, new Font("Dialog", Font.PLAIN, 20),
-                new Color(168, 168, 168));
+        Map<String, String[] > items = new HashMap<>();
+        items.put("File", new String[]{"Item menu 1", "Item menu 2"});
+        items.put("Help", new String[]{"Help message"});
+        items.put("About", new String[]{"About message"});
 
+        nav_bar = createTopBar(navbar_color, navbar_dimension);
+
+        Map<String, JMenu> menus = createMenus(menu_names, menu_font,menu_font_color );
 
         nav_bar.add(menus.get("File"));
         nav_bar.add(Box.createHorizontalGlue());
         nav_bar.add(menus.get("Help"));
         nav_bar.add(menus.get("About"));
 
-
-        itemMenu1 = new JMenuItem("Item menu 1");
-        itemMenu1.setFont(new Font("Dialog", Font.PLAIN, 20));
-        itemMenu1.addActionListener(this);
-        menus.get("File").add(itemMenu1);
-
-        itemMenu2 = new JMenuItem("Item menu 2");
-        itemMenu2.setFont(new Font("Dialog", Font.PLAIN, 20));
-        itemMenu2.addActionListener(this);
-        menus.get("File").add(itemMenu2);
-
-
-        JMenuItem itemMenu3 = new JMenuItem("About Message");
-        itemMenu3.setFont(new Font("Dialog", Font.PLAIN, 20));
-        itemMenu3.addActionListener(this);
-
-        JMenuItem itemMenu4 = new JMenuItem("Help message");
-        itemMenu4.setFont(new Font("Dialog", Font.PLAIN, 20));
-        itemMenu4.addActionListener(this);
-
-
-        menus.get("Help").add(itemMenu3);
-        menus.get("File").setFont(new Font("Dialog", Font.PLAIN, 20));
-        menus.get("About").add(itemMenu4);
-        menus.get("About").setFont(new Font("Dialog", Font.PLAIN, 20));
+        createMenuItems(menus, items, menu_font);
 
         return nav_bar;
     }
