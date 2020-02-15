@@ -24,8 +24,7 @@ import java.util.Map;
 
 
 
-public class GuiTemplate extends Frame implements ActionListener, FocusListener
-{
+public class GuiTemplate extends Frame implements ActionListener, FocusListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,8 +32,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     private static BufferedImage image;
     private static int xMax, yMax;
 
-    static class CanvasClassTemplate extends JPanel
-    {
+    static class CanvasClassTemplate extends JPanel {
 
         private static final long serialVersionUID = 1L;
 
@@ -63,8 +61,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
          * @return A BufferedImage with the information drew on it.
          */
 
-        private  BufferedImage GenerateImage()
-        {
+        private  BufferedImage GenerateImage() {
             Color color;
 
             int[][] matrix = objectNV.getData();
@@ -89,8 +86,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 
 
         @Override
-        protected void paintComponent(Graphics g)
-        {
+        protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
             Graphics g2 = (Graphics2D)g;
@@ -116,8 +112,9 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
      * @return
      */
 
-    private JMenuBar createTopBar(Color color, Dimension dimension)
-    {
+    @NotNull
+    private JMenuBar createTopBar(Color color, Dimension dimension) {
+
         JMenuBar top_bar = new JMenuBar();
         top_bar.setOpaque(true);
         top_bar.setBackground(color);
@@ -135,7 +132,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         return menu;
     }
 
-    private  Map<String, JMenu> createMenusItems(Map<String,String[]> items,Color color, Font font) {
+    @NotNull
+    private  Map<String, JMenu> createMenusItems(@NotNull Map<String,String[]> items, Color color, Font font) {
 
         JMenuItem item;
         JMenu m;
