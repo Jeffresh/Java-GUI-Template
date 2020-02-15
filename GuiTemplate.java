@@ -27,7 +27,6 @@ import java.util.Map;
 public class GuiTemplate extends Frame implements ActionListener, FocusListener
 {
 
-
     private static final long serialVersionUID = 1L;
 
     /** Image that will be printed on the Gui showing the visualization */
@@ -100,20 +99,9 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         }
     }
 
-
-
-    
     /** The general frame */
     private static JFrame frame;
 
-
-    /** Generic menu option 1 */
-    private static JMenuItem itemMenu1;
-    /** Generic menu option 2 */
-    private static JMenuItem itemMenu2;
-
- 
-  
 
     /**  */
     private static JSplitPane window; // window
@@ -139,60 +127,56 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     }
 
     @NotNull
-    private Map<String, JMenu> createMenus(@NotNull String [] menu_names, Font font, Color color)
-    {
+    private JMenu createMenu(@NotNull String menu_name, Font font, Color color) {
 
-        Map<String, JMenu> menus = new HashMap<>();
-
-        for (String menu_name : menu_names) {
-            JMenu menu = new JMenu(menu_name);
-            menu.setFont(font);
-            menu.setForeground(color);
-            menus.put(menu_name, menu);
-        }
-
-        return menus;
+        JMenu menu = new JMenu(menu_name);
+        menu.setFont(font);
+        menu.setForeground(color);
+        return menu;
     }
 
-    private void createMenuItems(Map<String,JMenu> menus, Map<String,String[]> items, Font font)
-    {
+    private  Map<String, JMenu> createMenusItems(Map<String,String[]> items,Color color, Font font) {
+
         JMenuItem item;
+        JMenu m;
+        Map<String, JMenu> menus = new HashMap<>();
+
         for(Map.Entry<String,String[]> menu: items.entrySet()){
+            String menu_name = menu.getKey();
+            m = createMenu(menu_name, font , color);
             for(String item_name :menu.getValue()) {
                 item = new JMenuItem(item_name);
                 item.setFont(font);
                 item.addActionListener(this);
-                menus.get(menu.getKey()).add(item);
+                m.add(item);
             }
+            menus.put(menu_name, m);
         }
+
+        return menus;
 
     }
 
-    private JMenuBar createNavBar()
-    {
+    private JMenuBar createNavBar() {
 
         Font menu_font = new Font("Dialog", Font.PLAIN, 20);
         Color menu_font_color = new Color(168, 168, 168);
         Color navbar_color = new Color(0,0,0);
         Dimension navbar_dimension = new Dimension(200,40);
 
-        String [] menu_names = {"File","Help", "About"};
-
-        Map<String, String[] > items = new HashMap<>();
-        items.put("File", new String[]{"Item menu 1", "Item menu 2"});
-        items.put("Help", new String[]{"Help message"});
-        items.put("About", new String[]{"About message"});
+        Map<String, String[] > menu_items = new HashMap<>();
+        menu_items.put("File", new String[]{"Item menu 1", "Item menu 2"});
+        menu_items.put("Help", new String[]{"Help message"});
+        menu_items.put("About", new String[]{"About message"});
 
         nav_bar = createTopBar(navbar_color, navbar_dimension);
 
-        Map<String, JMenu> menus = createMenus(menu_names, menu_font,menu_font_color );
+        Map<String, JMenu> menus = createMenusItems(menu_items, menu_font_color, menu_font);
 
         nav_bar.add(menus.get("File"));
         nav_bar.add(Box.createHorizontalGlue());
         nav_bar.add(menus.get("Help"));
         nav_bar.add(menus.get("About"));
-
-        createMenuItems(menus, items, menu_font);
 
         return nav_bar;
     }
@@ -207,16 +191,12 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     /** */
 
     private static JButton initialize, startcpmlt, stopcpmlt;
-    
-
 
     /**
      * 
      * @return
      */
-    private JSplitPane createTextFields()
-    {
-       
+    private JSplitPane createTextFields() {
 
         tnumericVar  = new JTextField();
         tnumericVar.setText(Double.toString(numericVar));
@@ -231,8 +211,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
 
         lstringVar = new JLabel("String Variable: ");
         lstringVar.setLabelFor(tstringVar);
-
-        
 
         //Lay out the text controls and the labels
         JPanel textControlsPane = new JPanel();
@@ -275,32 +253,27 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
                                                      BorderFactory.createTitledBorder("Control"),
                                                      BorderFactory.createEmptyBorder(5,5,5,5)));
 
-
-
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                               textControlsPane,
                                               botonesPane);
 
         splitPane.setOneTouchExpandable(true);
 
-
         return splitPane;   
     }    
  
 
-    private void addLabelTextRows(JLabel[] labels,
-                                  JTextField[] textFields, 
-                                //   JComboBox[] list,
-                                  Container container)
-    {
+    private void addLabelTextRows(JLabel[] labels, JTextField[] textFields,
+                                  //   JComboBox[] list,
+                                  Container container){
+
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.WEST;
         int numLabels = labels.length;
         // int numlist = list.length;
-        
- 
-        for (int i = 0; i < numLabels; i++) 
-        {
+
+        for (int i = 0; i < numLabels; i++){
+
         	labels[i].setFont(new Font(null,0,20));
         	textFields[i].setFont(new Font(null,0,20));
             c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
@@ -319,8 +292,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     }
 
 
-    private static  void createAndShowGUI()
-    {
+    private static  void createAndShowGUI(){
+
         frame = new JFrame("Generic-Gui");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setJMenuBar(new GuiTemplate().createNavBar());
@@ -335,14 +308,10 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
         
         frame.setMinimumSize(new Dimension(500,500));
         frame.setResizable(true);
-
-
-
         frame.pack();
         frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         frame.setContentPane(window);
-
         frame.validate();
         frame.repaint();
     }
@@ -364,48 +333,31 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
     private static String stringVar = "Hello World";
 
 
-    public void actionPerformed(@NotNull ActionEvent e)
-    {
+    public void actionPerformed(@NotNull ActionEvent e) {
 
-
-
-        if(e.getSource() == itemMenu1)
-        {
-
-            
+        if(e.getSource() == nav_bar.getMenu(0).getItem(0)) {
+            System.out.println("Hola mundo");
             frame.remove(window);
-          
+        }
 
+        if(e.getSource() == nav_bar.getMenu(0).getItem(1)) {
+            System.out.println("Adios mundo");
+            frame.remove(window);
         }
         
-        if(e.getSource()==stopcpmlt)
-        {
+        if(e.getSource()==stopcpmlt) {
             worker.cancel(true);
-         
             worker.cancel(false);
-
-
         }
 
-
-        if(e.getSource() == initialize)
-        {
-
-
-
+        if(e.getSource() == initialize) {
             caClassTemplate.objectNV = new ClassNV();
-
             caClassTemplate.objectNV.initializer();
             caClassTemplate.validate();
             caClassTemplate.repaint();
-            
-
         }
 
-
-        if(e.getSource()==startcpmlt)
-        {
-
+        if(e.getSource()==startcpmlt) {
             worker = new SwingWorker<Void, GuiTemplate>() 
             {
                 @Override
@@ -413,55 +365,43 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener
                 {
                     try{ caClassTemplate.objectNV.computeClassNV();}catch(Exception ex){};              
                     return null;
-              
                  }
             };
-
             worker.execute();
-
-
         } 
     }
-    
-    
+
     /**
      * 
      */
-    public void focusGained(FocusEvent e) 
-	{
+    public void focusGained(FocusEvent e) {
     	//nothing
 	}
-	 public void focusLost(FocusEvent e) 
-	 {
+	public void focusLost(FocusEvent e) {
             String nump;
-	                       
-	        if(e.getSource() == tnumericVar)
-	        {
 
-	            nump = tnumericVar.getText();
-	            numericVar = Double.parseDouble(nump);
-	        }
+            if(e.getSource() == tnumericVar){
+                nump = tnumericVar.getText();
+                numericVar = Double.parseDouble(nump);
+            }
 
-	        if(e.getSource() == tstringVar)
-	        {
-	            nump = tstringVar.getText();
-	            stringVar = nump;
-	        }
-	       
-	       
-	 }
+            if(e.getSource() == tstringVar) {
+                nump = tstringVar.getText();
+                stringVar = nump;
+            }
+
+    }
     
     public static void main(String[] args)
     {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
-                {
-                    createAndShowGUI();
-                }
-            });
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                                                                public void run()
+                                                                {
+                                                                    createAndShowGUI();
+                                                                }
+        });
     }
 }
 
