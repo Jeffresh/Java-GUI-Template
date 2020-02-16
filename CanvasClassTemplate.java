@@ -22,7 +22,7 @@ class CanvasClassTemplate extends JPanel {
         xMax = x_max;
         yMax = y_max;
 
-        image_ref = new BufferedImage(yMax, xMax,BufferedImage.TYPE_BYTE_INDEXED);
+        image_ref = new BufferedImage(xMax, yMax,BufferedImage.TYPE_BYTE_INDEXED);
 
     }
 
