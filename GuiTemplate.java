@@ -259,6 +259,16 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     }
 
+    public void deleteCanvasLabels(JLabel[] labels){
+
+        for(JLabel label: labels){
+            if(lstring_var_value!=null) caClassTemplate.remove(label);
+
+        }
+
+    }
+
+
 
     public void actionPerformed(@NotNull ActionEvent e) {
 
