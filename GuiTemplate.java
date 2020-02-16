@@ -244,16 +244,33 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static String stringVar = "Hello World";
     private static JLabel lnumeric_var_value;
     private static JLabel lstring_var_value;
+    private static int value = 0;
 
 
     public void actionPerformed(@NotNull ActionEvent e) {
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(0)) {
-            frame.remove(window);
+//            frame.remove(window);
+            value = 2;
+
+            if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
+            if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
+            CanvasClassTemplate.objectNV.initializer(value);
+            caClassTemplate.revalidate();
+            caClassTemplate.repaint();
+
         }
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(1)) {
-            frame.remove(window);
+
+            value = 3;
+
+            if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
+            if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
+            CanvasClassTemplate.objectNV.initializer(value);
+            caClassTemplate.revalidate();
+            caClassTemplate.repaint();
+
         }
         
         if(e.getSource()==stopcpmlt) {
@@ -271,7 +288,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
             CanvasClassTemplate.objectNV = new ClassNV();
             CanvasClassTemplate.objectNV.plug(caClassTemplate);
-            CanvasClassTemplate.objectNV.initializer();
+            CanvasClassTemplate.objectNV.initializer(value);
 
             lnumeric_var_value = new JLabel(Double.toString(numericVar));
             lnumeric_var_value.setFont(new Font(null, Font.PLAIN,50));

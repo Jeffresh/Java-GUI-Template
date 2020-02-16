@@ -17,7 +17,17 @@ public class ClassNV
 
     public void plug(CanvasClassTemplate ref) { canvasTemplateRef = ref; }
 
-    public void initializer() { matrix = new int[1000][1000]; }
+    public void initializer(int value) {
+        matrix = new int[1000][1000];
+
+        for (int i = 0; i < 1000 ; i++) {
+            for (int j = 0; j < 1000 ; j++) {
+                matrix[i][j] = value;
+
+            }
+
+        }
+    }
     public static Boolean abort = false;
 
     public static void stop() {
@@ -28,16 +38,15 @@ public class ClassNV
     {
         abort = false;
 
-        for (int i = 1; i < 1000; i=i+10) {
-            for (int j = 1; j < 1000; j++ ) {
-                if(abort)
-                    break;
-                matrix[j][i] = 1;
-                canvasTemplateRef.paintImmediately(0,0,1000,1000);
-
-            }
+        for (int j = 1; j < 1000; j++ ) {
+            if(abort)
+                break;
+            matrix[500][j] = 1;
+            canvasTemplateRef.paintImmediately(0,0,1000,1000);
 
         }
+
+
 
     }
     
