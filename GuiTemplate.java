@@ -6,9 +6,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,82 +26,16 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static final long serialVersionUID = 1L;
 
     /** Image that will be printed on the Gui showing the visualization */
-    private static BufferedImage image;
-    private static int xMax, yMax;
-
-    static class CanvasClassTemplate extends JPanel {
-
-        private static final long serialVersionUID = 1L;
-
-
-        /** Object of the class that Needs Visualization (ONV)  */
-        private ClassNV objectNV;
-
-
-        /** Constructor of the class that works as a link between the classNV and the GUI */
-
-        public CanvasClassTemplate()
-        {
-
-
-            objectNV = new ClassNV(/*parameters*/);
-            objectNV.plug(this);
-
-            image = new BufferedImage(1000, 1000,BufferedImage.TYPE_BYTE_INDEXED);
-
-        }
-
-        /**
-         * This method process the information of the ONV and draw it in the image.
-         * This method is called in {@link #paintComponent(Graphics)} method.
-         * Change to represent what you want, in this example we will draw a chessboard.
-         * @return A BufferedImage with the information drew on it.
-         */
-
-        private  BufferedImage GenerateImage() {
-            Color color;
-
-            int[][] matrix = objectNV.getData();
-
-            for(int x = 0; x < xMax; x++)
-            {
-                for(int y = 0; y < yMax; y++)
-                {
-                    if(matrix[x][y] % 2 == 1)
-                        color = Color.WHITE;
-                    else if(matrix[x][y] % 2 == 0 && matrix[x][y] != 0)
-                            color = Color.BLACK;
-                    else
-                        color = Color.BLACK;
-
-                    image.setRGB(x, y, color.getRGB());
-                }
-            }
-
-            return image;
-        }
-
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            Graphics g2 = (Graphics2D)g;
-            g2.drawImage(GenerateImage(),1000,1000,this);
-
-        }
-    }
+    private static int xMax =1000, yMax=1000;
 
     /** The general frame */
     private static JFrame frame;
-
-
     /**  */
     private static JSplitPane window; // window
     /** */
     private static JSplitPane buttons; //buttons
     /** */
-    private static JMenuBar nav_bar; //topToolBar
+    private static JMenuBar nav_bar;
 
 
     /** Creates Top navigation base bar
@@ -161,8 +92,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         Color menu_font_color = new Color(168, 168, 168);
         Color navbar_color = new Color(0,0,0);
         Dimension navbar_dimension = new Dimension(200,40);
-
         Map<String, String[] > menu_items = new HashMap<>();
+
         menu_items.put("File", new String[]{"Item menu 1", "Item menu 2"});
         menu_items.put("Help", new String[]{"Help message"});
         menu_items.put("About", new String[]{"About message"});
@@ -296,22 +227,22 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setJMenuBar(new GuiTemplate().createNavBar());
         
-        caClassTemplate = new CanvasClassTemplate();
+        caClassTemplate = new CanvasClassTemplate(xMax, yMax);
         caClassTemplate.setPreferredSize(new Dimension(1000, 1000));
 
         buttons =  new GuiTemplate().createTextFields();
 
         window = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,  caClassTemplate,buttons);
         window.setOneTouchExpandable(true);
-        
-        frame.setMinimumSize(new Dimension(500,500));
-        frame.setResizable(true);
         frame.pack();
         frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         frame.setContentPane(window);
+
         frame.validate();
         frame.repaint();
+
+
     }
 
     /** */
@@ -349,24 +280,26 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         }
 
         if(e.getSource() == initialize) {
-            caClassTemplate.objectNV = new ClassNV();
-            caClassTemplate.objectNV.initializer();
+            CanvasClassTemplate.objectNV.initializer();
             caClassTemplate.validate();
             caClassTemplate.repaint();
+
         }
 
         if(e.getSource()==startcpmlt) {
             worker = new SwingWorker<Void, GuiTemplate>() 
             {
                 @Override
-                protected Void doInBackground() 
-                {
-                    try{ caClassTemplate.objectNV.computeClassNV();}catch(Exception ex){};              
+                protected Void doInBackground() {
+                    try{
+                        CanvasClassTemplate.objectNV.computeClassNV();}
+                    catch(Exception ex){};
                     return null;
-                 }
+                }
             };
             worker.execute();
-        } 
+        }
+
     }
 
     /**

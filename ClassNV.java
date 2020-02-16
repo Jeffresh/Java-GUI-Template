@@ -11,42 +11,34 @@
 public class ClassNV
 {
 
-    /** */
-    private int[][] matrix;
 
     /** */
+    private static int[][] matrix;
 
-    private static GuiTemplate.CanvasClassTemplate canvasTemplateRef;
+    /** */
 
+    private static CanvasClassTemplate canvasTemplateRef;
 
     /**
      * 
      * @return
      */
 
-    public int[][] getData()
-    {
-        return matrix;
-    }
-
+    public int[][] getData() { return matrix; }
 
     /**
      * 
      * @param ref
      */
-    public void plug(GuiTemplate.CanvasClassTemplate ref)
-    {
-
-        canvasTemplateRef = ref;
-
-    }
-
+    public void plug(CanvasClassTemplate ref) { canvasTemplateRef = ref; }
 
     /** 
      * 
     */
-    public void initializer()
-    {
+    public void initializer() {
+
+        matrix = new int[1000][1000];
+        System.out.println(matrix[0][0]);
 
     }
 
