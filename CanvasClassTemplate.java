@@ -2,6 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * CanvasClassTemplate.java
+ * Purpose: generic Class that represent the canvas where you will show the stuff.
+ * @author: Jeffrey Pallarés Núñez.
+ * @version: 1.0 23/07/19
+ */
+
 class CanvasClassTemplate extends JPanel {
 
     private static final long serialVersionUID = 1L;
