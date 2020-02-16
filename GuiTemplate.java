@@ -242,7 +242,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     /**  */
 
     private static String stringVar = "Hello World";
-    private static JLabel[] canvas_labels;
+    private static JLabel lnumeric_var_value;
+    private static JLabel lstring_var_value;
 
 
     public void actionPerformed(@NotNull ActionEvent e) {
@@ -258,15 +259,35 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         if(e.getSource()==stopcpmlt) {
             worker.cancel(true);
             worker.cancel(false);
+            ClassNV.stop();
         }
 
         if(e.getSource() == initialize) {
 
+
+            if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
+            if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
+
+
             CanvasClassTemplate.objectNV = new ClassNV();
-            caClassTemplate.objectNV.plug(caClassTemplate);
-            caClassTemplate.objectNV.initializer();
+            CanvasClassTemplate.objectNV.plug(caClassTemplate);
+            CanvasClassTemplate.objectNV.initializer();
+
+            lnumeric_var_value = new JLabel(Double.toString(numericVar));
+            lnumeric_var_value.setFont(new Font(null, Font.PLAIN,50));
+            caClassTemplate.add(lnumeric_var_value);
+
+
+            lstring_var_value = new JLabel(stringVar);
+            lstring_var_value.setFont(new Font(null, Font.PLAIN,50));
+            caClassTemplate.add(lstring_var_value);
+
+
             caClassTemplate.validate();
             caClassTemplate.repaint();
+
+
+
 
         }
 
@@ -276,6 +297,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                 @Override
                 protected Void doInBackground() {
                     try{
+                        if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
+                        if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
 
                         CanvasClassTemplate.objectNV.computeClassNV();
                     }
@@ -302,18 +325,15 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
             if(e.getSource() == tnumericVar){
                 nump = tnumericVar.getText();
-                numericVar = Double.parseDouble(nump);
-                JLabel lnumeric_var_value = new JLabel(nump);
-                lnumeric_var_value.setFont(new Font(null, Font.PLAIN,50));
-                caClassTemplate.add(lnumeric_var_value);
+                if (!nump.equals(""))
+                    numericVar = Double.parseDouble(nump);
+
             }
 
             if(e.getSource() == tstringVar) {
                 nump = tstringVar.getText();
                 stringVar = nump;
-                JLabel lstring_var_value = new JLabel(stringVar);
-                lstring_var_value.setFont(new Font(null, Font.PLAIN,50));
-                caClassTemplate.add(lstring_var_value);
+
             }
 
     }
