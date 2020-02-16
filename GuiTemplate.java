@@ -248,6 +248,18 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static int value = 0;
 
 
+    public void showURI(String uri){
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            try {
+                Desktop.getDesktop().browse(new URI(uri));
+            } catch (IOException | URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
+
     public void actionPerformed(@NotNull ActionEvent e) {
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(0)) {
@@ -274,24 +286,14 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         }
 
-        if(e.getSource()==nav_bar.getMenu(2).getItem(0)){
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                try {
-                    Desktop.getDesktop().browse(new URI("https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html"));
-                } catch (IOException | URISyntaxException ex) {
-                    ex.printStackTrace();
-                }
-            }
+        if(e.getSource()==nav_bar.getMenu(2).getItem(0)) {
+            String uri = "https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html";
+            showURI(uri);
         }
 
-        if(e.getSource()==nav_bar.getMenu(3).getItem(0)){
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                try {
-                    Desktop.getDesktop().browse(new URI("https://github.com/Jeffresh"));
-                } catch (IOException | URISyntaxException ex) {
-                    ex.printStackTrace();
-                }
-            }
+        if(e.getSource()==nav_bar.getMenu(3).getItem(0)) {
+            String uri = "https://github.com/Jeffresh";
+            showURI(uri);
         }
         
         if(e.getSource()==stopcpmlt) {
