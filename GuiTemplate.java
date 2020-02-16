@@ -6,6 +6,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.IOException;
+import java.awt.Desktop;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -266,6 +270,26 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             caClassTemplate.revalidate();
             caClassTemplate.repaint();
 
+        }
+
+        if(e.getSource()==nav_bar.getMenu(2).getItem(0)){
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html"));
+                } catch (IOException | URISyntaxException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
+        if(e.getSource()==nav_bar.getMenu(3).getItem(0)){
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://github.com/Jeffresh"));
+                } catch (IOException | URISyntaxException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
         
         if(e.getSource()==stopcpmlt) {
