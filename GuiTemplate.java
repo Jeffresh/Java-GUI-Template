@@ -13,6 +13,8 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.Math.floor;
+
 
 /**
      * GuiTemplate.java
@@ -356,10 +358,27 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 	public void focusLost(FocusEvent e) {
             String nump;
 
-            if(e.getSource() == tnumericVar){
-                nump = tnumericVar.getText();
-                if (!nump.equals(""))
-                    numericVar = Double.parseDouble(nump);
+
+            try {
+
+                if (e.getSource() == tnumericVar) {
+                    nump = tnumericVar.getText();
+                    if (!nump.equals("")) {
+                        numericVar = Double.parseDouble(nump);
+                        if (numericVar < 0 || numericVar > 1000) {
+                            numericVar = 0;
+                            throw new Exception("Invalid Number");
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex){
+                String message = "\"Invalid Number\"\n"
+                        + "Enter a number between 0 and 1000\n"
+                        + " setted 0 by default";
+                JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
+                        JOptionPane.ERROR_MESSAGE);
 
             }
 
