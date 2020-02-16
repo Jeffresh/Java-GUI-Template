@@ -25,10 +25,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     private static final long serialVersionUID = 1L;
 
-    /** The general frame */
-    private static JFrame frame;
-    /**  */
-    private static JSplitPane window; // window
     /** */
     private static JMenuBar nav_bar;
 
@@ -202,7 +198,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     private static  void createAndShowGUI(){
 
-        frame = new JFrame("Generic-Gui");
+        JFrame frame = new JFrame("Generic-Gui");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setJMenuBar(new GuiTemplate().createNavBar());
 
@@ -211,10 +207,9 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         caClassTemplate = new CanvasClassTemplate(xMax, yMax);
         caClassTemplate.setPreferredSize(new Dimension(1000, 1000));
 
-        //buttons
         JSplitPane buttons = new GuiTemplate().createTextFields();
 
-        window = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,  caClassTemplate, buttons);
+        JSplitPane window = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, caClassTemplate, buttons);
         window.setOneTouchExpandable(true);
         frame.pack();
         frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);
@@ -303,9 +298,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             caClassTemplate.validate();
             caClassTemplate.repaint();
 
-
-
-
         }
 
         if(e.getSource()==startcpmlt) {
@@ -317,7 +309,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                         if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
                         if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
 
-                        CanvasClassTemplate.objectNV.computeClassNV();
+                        CanvasClassTemplate.objectNV.computeClassNV((int)floor(numericVar));
                     }
                     catch(Exception ex){System.out.println("Worker exception");}
                     return null;

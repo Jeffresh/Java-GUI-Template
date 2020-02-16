@@ -34,17 +34,37 @@ public class ClassNV
         abort = true;
     }
 
-    public void computeClassNV()
+
+
+    public void computeClassNV(int line)
     {
+
         abort = false;
 
-        for (int j = 1; j < 1000; j++ ) {
-            if(abort)
-                break;
-            matrix[500][j] = 1;
-            canvasTemplateRef.paintImmediately(0,0,1000,1000);
+
+
+        if(matrix[0][0]==2)
+        {
+            for (int j = 1; j < 1000; j++ ) {
+                if(abort)
+                    break;
+                matrix[line][j] = 1;
+                canvasTemplateRef.paintImmediately(0,0,1000,1000);
+
+            }
 
         }
+        else if(matrix[0][0]==3){
+            for (int j = 1; j < 1000; j++ ) {
+                if(abort)
+                    break;
+                matrix[j][line] = 1;
+                canvasTemplateRef.paintImmediately(0,0,1000,1000);
+
+            }
+        }
+
+
 
 
 
