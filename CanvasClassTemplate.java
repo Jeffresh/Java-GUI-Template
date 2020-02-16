@@ -44,7 +44,7 @@ class CanvasClassTemplate extends JPanel {
             {
 
                 if(matrix[x][y]  == 1)
-                    color = Color.WHITE;
+                    color = Color.GREEN;
                 else if(matrix[x][y] == 0)
                     color = Color.BLACK;
                 else

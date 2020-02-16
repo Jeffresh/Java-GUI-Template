@@ -38,13 +38,21 @@ public class ClassNV
     public void initializer() {
 
         matrix = new int[1000][1000];
-        System.out.println(matrix[0][0]);
 
     }
 
     /** */
     public void computeClassNV()
     {
+
+        for (int i = 1; i < 1000; i=i+10) {
+            for (int j = 1; j < 1000; j++ ) {
+                matrix[j][i] = 1;
+                canvasTemplateRef.paintImmediately(0,0,1000,1000);
+
+            }
+
+        }
 
     }
     
