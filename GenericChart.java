@@ -7,34 +7,34 @@ import javax.swing.*;
 
 public class GenericChart {
 
-    public JPanel charpanel;
+    public JPanel chartpanel;
     public XYChart chart;
     double phase;
 
 
-    public GenericChart(){
+    public GenericChart() {
 
         phase = 0;
         double[][] initdata = getData(phase);
         chart = QuickChart.getChart("Generic Chart", "Radians", "Sine", "sine", initdata[0], initdata[1]);
-        charpanel = new XChartPanel(chart);
+        chartpanel = new XChartPanel(chart);
 
 
     }
 
-    private void process() throws InterruptedException {
+    private void process() {
 
         while (true) {
 
             phase += 2 * Math.PI * 2 / 20.0;
 
-            Thread.sleep(100);
 
             final double[][] data = getData(phase);
 
             chart.updateXYSeries("sine", data[0], data[1], null);
-            charpanel.validate();
-            charpanel.repaint();
+//            chart.updateXYSeries("sine", data[0], data[1], null);
+            chartpanel.validate();
+            chartpanel.repaint();
         }
 
     }
