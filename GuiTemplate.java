@@ -234,19 +234,11 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     }
 
-    /** */
-
     private static SwingWorker<Void,GuiTemplate> worker;
 
-    /**  */
     private static CanvasClassTemplate caClassTemplate;
 
-
-    /** */
-
     private static double numericVar = 33 ;
-
-    /**  */
 
     private static String stringVar = "Hello World";
     private static JLabel lnumeric_var_value;
@@ -274,14 +266,11 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     }
 
-
     public void deleteCanvasLabels(){
         if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
         if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
 
     }
-
-
 
     public void actionPerformed(@NotNull ActionEvent e) {
 
@@ -364,11 +353,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     }
 
-
-
-    /**
-     * 
-     */
     public void focusGained(FocusEvent e) {
     	//nothing
 
