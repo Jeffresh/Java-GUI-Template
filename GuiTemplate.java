@@ -275,30 +275,30 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     }
 
 
+    public void deleteCanvasLabels(){
+        if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
+        if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
+
+    }
+
+
 
     public void actionPerformed(@NotNull ActionEvent e) {
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(0)) {
-//            frame.remove(window);
+//      frame.remove(window);
             value = 2;
-
-            if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
-            if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
+            deleteCanvasLabels();
             CanvasClassTemplate.objectNV.initializer(value);
             caClassTemplate.revalidate();
             caClassTemplate.repaint();
-
         }
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(1)) {
 
             value = 3;
-
-            if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
-            if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
+            deleteCanvasLabels();
             CanvasClassTemplate.objectNV.initializer(value);
-
-
             caClassTemplate.revalidate();
             caClassTemplate.repaint();
 
@@ -326,11 +326,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         if(e.getSource() == initialize) {
 
-
-            if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
-            if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
-
-
+            deleteCanvasLabels();
             CanvasClassTemplate.objectNV = new ClassNV();
             CanvasClassTemplate.objectNV.plug(caClassTemplate);
             CanvasClassTemplate.objectNV.initializer(value);
@@ -356,9 +352,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                 @Override
                 protected Void doInBackground() {
                     try{
-                        if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
-                        if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
-
+                        deleteCanvasLabels();
                         CanvasClassTemplate.objectNV.computeClassNV((int)floor(numericVar));
                     }
                     catch(Exception ex){System.out.println("Worker exception");}
