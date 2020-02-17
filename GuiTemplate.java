@@ -87,6 +87,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         Map<String, String[] > menu_items = new HashMap<>();
 
         menu_items.put("File", new String[]{"Item menu 1", "Item menu 2"});
+        menu_items.put("Plot", new String []{"Chart 1"});
         menu_items.put("Help", new String[]{"Help message"});
         menu_items.put("About", new String[]{"About message"});
 
@@ -95,6 +96,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         Map<String, JMenu> menus = createMenusItems(menu_items, menu_font_color, menu_font);
 
         nav_bar.add(menus.get("File"));
+        nav_bar.add(menus.get("Plot"));
         nav_bar.add(Box.createHorizontalGlue());
         nav_bar.add(menus.get("Help"));
         nav_bar.add(menus.get("About"));
