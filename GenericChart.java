@@ -1,21 +1,28 @@
 import org.knowm.xchart.QuickChart;
-import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
+
+import javax.swing.*;
 
 
 public class GenericChart {
 
-    public void processData() throws InterruptedException {
+    public JPanel charpanel;
+    public XYChart chart;
+    double phase;
 
-        double phase = 0;
+
+    public GenericChart(){
+
+        phase = 0;
         double[][] initdata = getData(phase);
+        chart = QuickChart.getChart("Generic Chart", "Radians", "Sine", "sine", initdata[0], initdata[1]);
+        charpanel = new XChartPanel(chart);
 
-        // Create Chart
-        final XYChart chart = QuickChart.getChart("Simple XChart Real-time Demo", "Radians", "Sine", "sine", initdata[0], initdata[1]);
 
-        // Show it
-        final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
-        sw.displayChart();
+    }
+
+    private void process() throws InterruptedException {
 
         while (true) {
 
@@ -26,12 +33,13 @@ public class GenericChart {
             final double[][] data = getData(phase);
 
             chart.updateXYSeries("sine", data[0], data[1], null);
-            sw.repaintChart();
+            charpanel.validate();
+            charpanel.repaint();
         }
 
     }
 
-    private static double[][] getData(double phase) {
+    private double[][] getData(double phase) {
 
         double[] xData = new double[100];
         double[] yData = new double[100];
@@ -41,16 +49,6 @@ public class GenericChart {
             yData[i] = Math.sin(radians);
         }
         return new double[][]{xData, yData};
-    }
-
-
-
-    public static void main(String[] args) throws Exception {
-
-        GenericChart chart = new GenericChart();
-
-        chart.processData();
-
     }
 }
 
