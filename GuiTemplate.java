@@ -88,7 +88,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         Map<String, String[] > menu_items = new HashMap<>();
 
         menu_items.put("File", new String[]{"Item menu 1", "Item menu 2"});
-//        menu_items.put("Plot", new String[]{"Chart 1"});
+        menu_items.put("Plot", new String[]{"Chart 1"});
         menu_items.put("Help", new String[]{"Help message"});
         menu_items.put("About", new String[]{"About message"});
 
@@ -97,7 +97,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         Map<String, JMenu> menus = createMenusItems(menu_items, menu_font_color, menu_font);
 
         nav_bar.add(menus.get("File"));
-//        nav_bar.add(menus.get("Plot"));
+        nav_bar.add(menus.get("Plot"));
         nav_bar.add(Box.createHorizontalGlue());
         nav_bar.add(menus.get("Help"));
         nav_bar.add(menus.get("About"));
@@ -130,8 +130,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         GridBagLayout gridbag = new GridBagLayout();
 
         textControlsPane.setLayout(gridbag);
-        textControlsPane.setPreferredSize(new Dimension(100, 400));
-        textControlsPane.setMinimumSize(new Dimension(100, 400));
+        textControlsPane.setPreferredSize(new Dimension(100, 900));
+        textControlsPane.setMinimumSize(new Dimension(100, 900));
 
         JLabel[] labels = {lnumericVar, lstringVar};
 
@@ -219,15 +219,14 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         JSplitPane buttons = new GuiTemplate().createTextFields();
         chart = new GenericChart();
-        JSplitPane tools = new JSplitPane(JSplitPane.VERTICAL_SPLIT, buttons, chart.chartpanel);
+//        JSplitPane tools = new JSplitPane(JSplitPane.VERTICAL_SPLIT, buttons, chart.chartpanel);
 
-        JSplitPane window = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, caClassTemplate, tools);
+        JSplitPane window = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, caClassTemplate, buttons);
         window.setOneTouchExpandable(true);
         frame.pack();
         frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         frame.setContentPane(window);
-
         frame.validate();
         frame.repaint();
 
@@ -293,16 +292,34 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         }
 //
-//        if(e.getSource() == nav_bar.getMenu(1).getItem(0)){
-//
-//        }
+        if(e.getSource() == nav_bar.getMenu(1).getItem(0)){
 
-        if(e.getSource()==nav_bar.getMenu(2).getItem(0)) {
+            worker = new SwingWorker<Void, GuiTemplate>()
+            {
+                @Override
+                protected Void doInBackground() {
+                    try{
+                        RealTimeChart realTimeChart = new RealTimeChart();
+
+                        realTimeChart.show();
+
+                    }
+                    catch(Exception ex){System.out.println("Worker exception");}
+                    return null;
+                }
+            };
+            worker.execute();
+
+
+
+        }
+
+        if(e.getSource()==nav_bar.getMenu(3).getItem(0)) {
             String uri = "https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html";
             showURI(uri);
         }
 
-        if(e.getSource()==nav_bar.getMenu(3).getItem(0)) {
+        if(e.getSource()==nav_bar.getMenu(4).getItem(0)) {
             String uri = "https://github.com/Jeffresh";
             showURI(uri);
         }
