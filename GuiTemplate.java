@@ -160,6 +160,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         botonesPane.setPreferredSize(new Dimension(100, 5));
         botonesPane.setMaximumSize(new Dimension(100, 5));
+        botonesPane.setMinimumSize(new Dimension(100, 5));
 
         botonesPane.setBorder(
                   BorderFactory.createCompoundBorder(
@@ -169,6 +170,10 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                               textControlsPane,
                                               botonesPane);
+        splitPane.setMaximumSize(new Dimension(800,800));
+        splitPane.setMinimumSize(new Dimension(800,800));
+        textControlsPane.setMaximumSize(new Dimension(800,800));
+        textControlsPane.setMinimumSize(new Dimension(800,800));
 
         splitPane.setOneTouchExpandable(true);
 
@@ -209,6 +214,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         JFrame frame = new JFrame("Generic-Gui");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(500,500));
         frame.setJMenuBar(new GuiTemplate().createNavBar());
 
         int xMax = 1000;
