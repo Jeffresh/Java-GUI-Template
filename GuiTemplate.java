@@ -284,8 +284,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             value = 2;
             deleteCanvasLabels();
             CanvasClassTemplate.objectNV.initializer(value);
-            caClassTemplate.revalidate();
-            caClassTemplate.repaint();
+            caClassTemplate.updateCanvas();
+
         }
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(1)) {
@@ -293,8 +293,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             value = 3;
             deleteCanvasLabels();
             CanvasClassTemplate.objectNV.initializer(value);
-            caClassTemplate.revalidate();
-            caClassTemplate.repaint();
+            caClassTemplate.updateCanvas();
 
         }
 //
@@ -347,14 +346,10 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             lnumeric_var_value.setFont(new Font(null, Font.PLAIN,50));
             caClassTemplate.add(lnumeric_var_value);
 
-
             lstring_var_value = new JLabel(stringVar);
             lstring_var_value.setFont(new Font(null, Font.PLAIN,50));
             caClassTemplate.add(lstring_var_value);
-
-
-            caClassTemplate.validate();
-            caClassTemplate.repaint();
+            caClassTemplate.updateCanvas();
 
         }
 

@@ -20,6 +20,11 @@ class CanvasClassTemplate extends JPanel {
     public static int xMax;
     public static int yMax;
 
+    public void updateCanvas(){
+        this.revalidate();
+        this.repaint();
+    }
+
 
     /** Constructor of the class that works as a link between the classNV and the GUI */
     public CanvasClassTemplate(int x_max, int y_max) {
