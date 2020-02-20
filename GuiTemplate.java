@@ -15,7 +15,6 @@ import java.util.Map;
 
 import static java.lang.Math.floor;
 
-
 /**
      * GuiTemplate.java
      * Purpose: this program
@@ -25,16 +24,12 @@ import static java.lang.Math.floor;
      * @version: 1.0 23/07/19
      */
 
-
-
 public class GuiTemplate extends Frame implements ActionListener, FocusListener {
 
     private static final long serialVersionUID = 1L;
 
-    /** */
     private static JMenuBar nav_bar;
     private static GenericChart chart;
-
 
     @NotNull
     private JMenuBar createTopBar(Color color, Dimension dimension) {
@@ -105,27 +100,26 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         return nav_bar;
     }
 
-    private static JTextField tnumericVar, tstringVar;
+    private static JTextField textfield_numericVar, textfield_stringVar;
 
-    private static JButton initialize, startcpmlt, stopcpmlt;
+    private static JButton initialize_button, start_button, stop_button;
 
     private JSplitPane createTextFields() {
 
-        tnumericVar  = new JTextField();
-        tnumericVar.setText(Double.toString(numericVar));
-        tnumericVar.addFocusListener(this);
+        textfield_numericVar = new JTextField();
+        textfield_numericVar.setText(Double.toString(numeric_var));
+        textfield_numericVar.addFocusListener(this);
 
-        tstringVar = new JTextField();
-        tstringVar.setText(stringVar);
-        tstringVar.addFocusListener(this);
+        textfield_stringVar = new JTextField();
+        textfield_stringVar.setText(string_var);
+        textfield_stringVar.addFocusListener(this);
 
         JLabel lnumericVar = new JLabel("Numeric Variable: ");
-        lnumericVar.setLabelFor(tnumericVar);
+        lnumericVar.setLabelFor(textfield_numericVar);
 
         JLabel lstringVar = new JLabel("String Variable: ");
-        lstringVar.setLabelFor(tstringVar);
+        lstringVar.setLabelFor(textfield_stringVar);
 
-        //Lay out the text controls and the labels
         JPanel textControlsPane = new JPanel();
         GridBagLayout gridbag = new GridBagLayout();
 
@@ -135,7 +129,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         JLabel[] labels = {lnumericVar, lstringVar};
 
-        JTextField[] textFields = {tnumericVar, tstringVar}; 
+        JTextField[] textFields = {textfield_numericVar, textfield_stringVar};
 
         addLabelTextRows(labels,textFields,textControlsPane);
 
@@ -143,20 +137,20 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                                    BorderFactory.createCompoundBorder(
                                                                       BorderFactory.createTitledBorder("Variables"),
                                                                       BorderFactory.createEmptyBorder(5,5,5,5)));
-        initialize = new JButton("Initialize");
-        initialize.addActionListener(this);
+        initialize_button = new JButton("Initialize");
+        initialize_button.addActionListener(this);
 
-        startcpmlt = new JButton("Start");
-        startcpmlt.addActionListener(this);
+        start_button = new JButton("Start");
+        start_button.addActionListener(this);
 
-        stopcpmlt = new JButton("Stop");
-        stopcpmlt.addActionListener(this);
+        stop_button = new JButton("Stop");
+        stop_button.addActionListener(this);
 
         JPanel botonesPane = new JPanel();
 
-        botonesPane.add(initialize,BorderLayout.CENTER);
-        botonesPane.add(startcpmlt,BorderLayout.CENTER);
-        botonesPane.add(stopcpmlt,BorderLayout.CENTER);
+        botonesPane.add(initialize_button,BorderLayout.CENTER);
+        botonesPane.add(start_button,BorderLayout.CENTER);
+        botonesPane.add(stop_button,BorderLayout.CENTER);
 
         botonesPane.setPreferredSize(new Dimension(100, 5));
         botonesPane.setMaximumSize(new Dimension(100, 5));
@@ -179,7 +173,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         return splitPane;   
     }    
- 
 
     private void addLabelTextRows(JLabel[] labels, JTextField[] textFields,
                                   //   JComboBox[] list,
@@ -209,7 +202,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         
     }
 
-
     private static  void createAndShowGUI(){
 
         JFrame frame = new JFrame("Generic-Gui");
@@ -219,15 +211,15 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         int xMax = 1000;
         int yMax = 1000;
-        caClassTemplate = new CanvasClassTemplate(xMax, yMax);
-        caClassTemplate.setPreferredSize(new Dimension(1000, 1000));
+        canvas_template = new CanvasClassTemplate(xMax, yMax);
+        canvas_template.setPreferredSize(new Dimension(1000, 1000));
 
 
         JSplitPane buttons = new GuiTemplate().createTextFields();
         chart = new GenericChart();
 //        JSplitPane tools = new JSplitPane(JSplitPane.VERTICAL_SPLIT, buttons, chart.chartpanel);
 
-        JSplitPane window = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, caClassTemplate, buttons);
+        JSplitPane window = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, canvas_template, buttons);
         window.setOneTouchExpandable(true);
         frame.pack();
         frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);
@@ -241,15 +233,14 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     private static SwingWorker<Void,GuiTemplate> worker;
 
-    private static CanvasClassTemplate caClassTemplate;
+    private static CanvasClassTemplate canvas_template;
 
-    private static double numericVar = 33 ;
+    private static double numeric_var = 33 ;
 
-    private static String stringVar = "Hello World";
-    private static JLabel lnumeric_var_value;
-    private static JLabel lstring_var_value;
+    private static String string_var = "Hello World";
+    private static JLabel label_numeric_var_value;
+    private static JLabel label_string_var_value;
     private static int value = 0;
-
 
     public void showURI(String uri){
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
@@ -265,15 +256,15 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     public void deleteCanvasLabels(@NotNull JLabel[] labels){
 
         for(JLabel label: labels){
-            if(lstring_var_value!=null) caClassTemplate.remove(label);
+            if(label_string_var_value !=null) canvas_template.remove(label);
 
         }
 
     }
 
     public void deleteCanvasLabels(){
-        if(lstring_var_value!=null) caClassTemplate.remove(lstring_var_value);
-        if(lnumeric_var_value!=null) caClassTemplate.remove(lnumeric_var_value);
+        if(label_string_var_value !=null) canvas_template.remove(label_string_var_value);
+        if(label_numeric_var_value !=null) canvas_template.remove(label_numeric_var_value);
 
     }
 
@@ -284,21 +275,17 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             value = 2;
             deleteCanvasLabels();
             CanvasClassTemplate.objectNV.initializer(value);
-            caClassTemplate.updateCanvas();
-
+            canvas_template.updateCanvas();
         }
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(1)) {
-
             value = 3;
             deleteCanvasLabels();
             CanvasClassTemplate.objectNV.initializer(value);
-            caClassTemplate.updateCanvas();
-
+            canvas_template.updateCanvas();
         }
 //
         if(e.getSource() == nav_bar.getMenu(1).getItem(0)){
-
             worker = new SwingWorker<Void, GuiTemplate>()
             {
                 @Override
@@ -314,9 +301,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                 }
             };
             worker.execute();
-
-
-
         }
 
         if(e.getSource()==nav_bar.getMenu(3).getItem(0)) {
@@ -329,38 +313,38 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             showURI(uri);
         }
         
-        if(e.getSource()==stopcpmlt) {
+        if(e.getSource()== stop_button) {
             worker.cancel(true);
             worker.cancel(false);
             ClassNV.stop();
         }
 
-        if(e.getSource() == initialize) {
+        if(e.getSource() == initialize_button) {
 
             deleteCanvasLabels();
             CanvasClassTemplate.objectNV = new ClassNV();
-            CanvasClassTemplate.objectNV.plug(caClassTemplate);
+            CanvasClassTemplate.objectNV.plug(canvas_template);
             CanvasClassTemplate.objectNV.initializer(value);
 
-            lnumeric_var_value = new JLabel(Double.toString(numericVar));
-            lnumeric_var_value.setFont(new Font(null, Font.PLAIN,50));
-            caClassTemplate.add(lnumeric_var_value);
+            label_numeric_var_value = new JLabel(Double.toString(numeric_var));
+            label_numeric_var_value.setFont(new Font(null, Font.PLAIN,50));
+            canvas_template.add(label_numeric_var_value);
 
-            lstring_var_value = new JLabel(stringVar);
-            lstring_var_value.setFont(new Font(null, Font.PLAIN,50));
-            caClassTemplate.add(lstring_var_value);
-            caClassTemplate.updateCanvas();
+            label_string_var_value = new JLabel(string_var);
+            label_string_var_value.setFont(new Font(null, Font.PLAIN,50));
+            canvas_template.add(label_string_var_value);
+            canvas_template.updateCanvas();
 
         }
 
-        if(e.getSource()==startcpmlt) {
+        if(e.getSource()== start_button) {
             worker = new SwingWorker<Void, GuiTemplate>() 
             {
                 @Override
                 protected Void doInBackground() {
                     try{
                         deleteCanvasLabels();
-                        CanvasClassTemplate.objectNV.computeClassNV((int)floor(numericVar));
+                        CanvasClassTemplate.objectNV.computeClassNV((int)floor(numeric_var));
                     }
                     catch(Exception ex){System.out.println("Worker exception");}
                     return null;
@@ -373,24 +357,19 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     public void focusGained(FocusEvent e) {
     	//nothing
-
 	}
 	public void focusLost(FocusEvent e) {
             String nump;
-
-
             try {
-
-                if (e.getSource() == tnumericVar) {
-                    nump = tnumericVar.getText();
-                    if (!nump.equals("")) {
-                        numericVar = Double.parseDouble(nump);
-                        if (numericVar < 0 || numericVar > 1000) {
-                            numericVar = 0;
-                            throw new Exception("Invalid Number");
-
-                        }
+                double nump_value;
+                if (e.getSource() == textfield_numericVar) {
+                    nump = textfield_numericVar.getText();
+                    nump_value = Double.parseDouble(nump);
+                    if (nump.equals("") || (nump_value < 0 || nump_value >=1000)) {
+                        numeric_var = 0;
+                        throw new Exception("Invalid Number");
                     }
+                    numeric_var = nump_value;
                 }
             }
             catch (Exception ex){
@@ -399,14 +378,10 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                         + " setted 0 by default";
                 JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
                         JOptionPane.ERROR_MESSAGE);
-
             }
 
-            if(e.getSource() == tstringVar) {
-                nump = tstringVar.getText();
-                stringVar = nump;
-
-            }
+            if(e.getSource() == textfield_stringVar)
+                string_var = textfield_stringVar.getText();
 
     }
     
