@@ -30,6 +30,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     private static JMenuBar nav_bar;
     private static GenericChart chart;
+    private static String[] buttons_names = {"Initialize", "Start", "Stop"};
+
 
     @NotNull
     private JMenuBar createTopBar(Color color, Dimension dimension) {
@@ -103,6 +105,21 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static JTextField textfield_numericVar, textfield_stringVar;
 
     private static JButton initialize_button, start_button, stop_button;
+    private static Map<String, JButton> gui_buttons = new HashMap<String, JButton>();
+
+    private Map<String, JButton> create_buttons(String[] button_names){
+
+        Map<String, JButton> buttons_dict = new HashMap<String, JButton>();
+        JButton button;
+
+        for (String name: button_names) {
+            button = new JButton(name);
+            button.addActionListener(this);
+            buttons_dict.put(name, button);
+        }
+
+        return buttons_dict;
+    }
 
     private JSplitPane createTextFields() {
 
@@ -137,20 +154,26 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                                    BorderFactory.createCompoundBorder(
                                                                       BorderFactory.createTitledBorder("Variables"),
                                                                       BorderFactory.createEmptyBorder(5,5,5,5)));
-        initialize_button = new JButton("Initialize");
-        initialize_button.addActionListener(this);
+//        initialize_button = new JButton("Initialize");
+//        initialize_button.addActionListener(this);
+//
+//        start_button = new JButton("Start");
+//        start_button.addActionListener(this);
+//
+//        stop_button = new JButton("Stop");
+//        stop_button.addActionListener(this);
 
-        start_button = new JButton("Start");
-        start_button.addActionListener(this);
-
-        stop_button = new JButton("Stop");
-        stop_button.addActionListener(this);
+        gui_buttons = create_buttons(buttons_names);
 
         JPanel botonesPane = new JPanel();
 
-        botonesPane.add(initialize_button,BorderLayout.CENTER);
-        botonesPane.add(start_button,BorderLayout.CENTER);
-        botonesPane.add(stop_button,BorderLayout.CENTER);
+        for(String button_name: buttons_names)
+            botonesPane.add(gui_buttons.get(button_name), BorderLayout.CENTER);
+
+
+//        botonesPane.add(initialize_button,BorderLayout.CENTER);
+//        botonesPane.add(start_button,BorderLayout.CENTER);
+//        botonesPane.add(stop_button,BorderLayout.CENTER);
 
         botonesPane.setPreferredSize(new Dimension(100, 5));
         botonesPane.setMaximumSize(new Dimension(100, 5));
@@ -313,13 +336,13 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             showURI(uri);
         }
         
-        if(e.getSource()== stop_button) {
+        if(e.getSource()== gui_buttons.get(buttons_names[2])) {
             worker.cancel(true);
             worker.cancel(false);
             ClassNV.stop();
         }
 
-        if(e.getSource() == initialize_button) {
+        if(e.getSource() == gui_buttons.get(buttons_names[0])) {
 
             deleteCanvasLabels();
             CanvasClassTemplate.objectNV = new ClassNV();
@@ -337,7 +360,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         }
 
-        if(e.getSource()== start_button) {
+        if(e.getSource()== gui_buttons.get(buttons_names[1])) {
             worker = new SwingWorker<Void, GuiTemplate>() 
             {
                 @Override
