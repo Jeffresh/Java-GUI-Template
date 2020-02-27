@@ -121,80 +121,99 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         return buttons_dict;
     }
 
+    public static Map<String, String> textfields = new HashMap<>();
+    private static String[] textfield_labels = {"Numeric Variable: ", "String Variable: "};
+
+    private JPanel createButtonsPane(){
+
+        gui_buttons = create_buttons(buttons_names);
+        JPanel buttons_pane = new JPanel();
+        for(String button_name: buttons_names)
+            buttons_pane.add(gui_buttons.get(button_name), BorderLayout.CENTER);
+
+        buttons_pane.setPreferredSize(new Dimension(100, 5));
+        buttons_pane.setMaximumSize(new Dimension(100, 5));
+        buttons_pane.setMinimumSize(new Dimension(100, 5));
+
+        buttons_pane.setBorder(
+                BorderFactory.createCompoundBorder(
+                        BorderFactory.createTitledBorder("Control"),
+                        BorderFactory.createEmptyBorder(5,5,5,5)));
+
+        return buttons_pane;
+
+    }
+
+    private Object[] createAuxTextFields(Map<String, String> textfields, String[] label_names){
+        JLabel[] labels = new JLabel[label_names.length];
+        JTextField[] textFields = new JTextField[label_names.length];
+        int index = 0;
+
+        for(String label: label_names){
+            textFields[index] = new JTextField();
+            textFields[index].setText(textfields.get(label));
+            textFields[index].addFocusListener(this);
+            labels[index] = new JLabel(label);
+            labels[index].setLabelFor(textFields[index]);
+            index++;
+        }
+
+        return new Object[]{labels, textFields};
+
+    }
+
     private JSplitPane createTextFields() {
 
-        textfield_numericVar = new JTextField();
-        textfield_numericVar.setText(Double.toString(numeric_var));
-        textfield_numericVar.addFocusListener(this);
+        textfields.put("Numeric Variable: ", "30");
+        textfields.put("String Variable: ", "Hello World");
 
-        textfield_stringVar = new JTextField();
-        textfield_stringVar.setText(string_var);
-        textfield_stringVar.addFocusListener(this);
+//        textfield_numericVar = new JTextField();
+//        textfield_numericVar.setText(Double.toString(numeric_var));
+//        textfield_numericVar.addFocusListener(this);
+//
+//        textfield_stringVar = new JTextField();
+//        textfield_stringVar.setText(string_var);
+//        textfield_stringVar.addFocusListener(this);
+//
+//        JLabel numeric_variable_label = new JLabel("Numeric Variable: ");
+//        numeric_variable_label.setLabelFor(textfield_numericVar);
+//
+//        JLabel string_variable_label = new JLabel("String Variable: ");
+//        string_variable_label.setLabelFor(textfield_stringVar);
 
-        JLabel lnumericVar = new JLabel("Numeric Variable: ");
-        lnumericVar.setLabelFor(textfield_numericVar);
+        Object[]  labels_textfields = createAuxTextFields(textfields, textfield_labels);
 
-        JLabel lstringVar = new JLabel("String Variable: ");
-        lstringVar.setLabelFor(textfield_stringVar);
-
-        JPanel textControlsPane = new JPanel();
+        JPanel input_variables_pane = new JPanel();
         GridBagLayout gridbag = new GridBagLayout();
 
-        textControlsPane.setLayout(gridbag);
-        textControlsPane.setPreferredSize(new Dimension(100, 900));
-        textControlsPane.setMinimumSize(new Dimension(100, 900));
+        input_variables_pane.setLayout(gridbag);
+        input_variables_pane.setPreferredSize(new Dimension(100, 900));
+        input_variables_pane.setMinimumSize(new Dimension(100, 900));
 
-        JLabel[] labels = {lnumericVar, lstringVar};
+        JLabel[] input_variables_labels = (JLabel[]) labels_textfields[0];
 
-        JTextField[] textFields = {textfield_numericVar, textfield_stringVar};
+        JTextField[] input_variables_textfields = (JTextField[]) labels_textfields[1];
 
-        addLabelTextRows(labels,textFields,textControlsPane);
+        addLabelTextRows(input_variables_labels,input_variables_textfields,input_variables_pane);
 
-        textControlsPane.setBorder(
+        input_variables_pane.setBorder(
                                    BorderFactory.createCompoundBorder(
                                                                       BorderFactory.createTitledBorder("Variables"),
                                                                       BorderFactory.createEmptyBorder(5,5,5,5)));
-//        initialize_button = new JButton("Initialize");
-//        initialize_button.addActionListener(this);
-//
-//        start_button = new JButton("Start");
-//        start_button.addActionListener(this);
-//
-//        stop_button = new JButton("Stop");
-//        stop_button.addActionListener(this);
 
-        gui_buttons = create_buttons(buttons_names);
+        JPanel buttons_pane = createButtonsPane();
 
-        JPanel botonesPane = new JPanel();
+        JSplitPane control_center_panel = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                                              input_variables_pane,
+                                              buttons_pane);
+        control_center_panel.setMaximumSize(new Dimension(800,800));
+        control_center_panel.setMinimumSize(new Dimension(800,800));
+        input_variables_pane.setMaximumSize(new Dimension(800,800));
+        input_variables_pane.setMinimumSize(new Dimension(800,800));
 
-        for(String button_name: buttons_names)
-            botonesPane.add(gui_buttons.get(button_name), BorderLayout.CENTER);
+        control_center_panel.setOneTouchExpandable(true);
 
-
-//        botonesPane.add(initialize_button,BorderLayout.CENTER);
-//        botonesPane.add(start_button,BorderLayout.CENTER);
-//        botonesPane.add(stop_button,BorderLayout.CENTER);
-
-        botonesPane.setPreferredSize(new Dimension(100, 5));
-        botonesPane.setMaximumSize(new Dimension(100, 5));
-        botonesPane.setMinimumSize(new Dimension(100, 5));
-
-        botonesPane.setBorder(
-                  BorderFactory.createCompoundBorder(
-                                                     BorderFactory.createTitledBorder("Control"),
-                                                     BorderFactory.createEmptyBorder(5,5,5,5)));
-
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                                              textControlsPane,
-                                              botonesPane);
-        splitPane.setMaximumSize(new Dimension(800,800));
-        splitPane.setMinimumSize(new Dimension(800,800));
-        textControlsPane.setMaximumSize(new Dimension(800,800));
-        textControlsPane.setMinimumSize(new Dimension(800,800));
-
-        splitPane.setOneTouchExpandable(true);
-
-        return splitPane;   
+        return control_center_panel;
     }    
 
     private void addLabelTextRows(JLabel[] labels, JTextField[] textFields,
