@@ -101,7 +101,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         return nav_bar;
     }
-
     private static JTextField textfield_numericVar, textfield_stringVar;
 
     private static JButton initialize_button, start_button, stop_button;
@@ -121,8 +120,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         return buttons_dict;
     }
 
-    public static Map<String, String> textfields = new HashMap<>();
-    private static String[] textfield_labels = {"Numeric Variable: ", "String Variable: "};
+    public static Map<String, String> textfields_and_labels = new HashMap<>();
 
     private JPanel createButtonsPane(){
 
@@ -144,44 +142,32 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     }
 
-    private Object[] createAuxTextFields(Map<String, String> textfields, String[] label_names){
-        JLabel[] labels = new JLabel[label_names.length];
-        JTextField[] textFields = new JTextField[label_names.length];
+    private Object[] createAuxTextFields(Map<String, String> texts_labels){
+        JLabel[] labels = new JLabel[texts_labels.size()];
+        JTextField[] textFields = new JTextField[texts_labels.size()];
         int index = 0;
 
-        for(String label: label_names){
+        for(Map.Entry<String, String> text_label: texts_labels.entrySet()){
             textFields[index] = new JTextField();
-            textFields[index].setText(textfields.get(label));
+            textFields[index].setText(text_label.getValue());
             textFields[index].addFocusListener(this);
-            labels[index] = new JLabel(label);
+            labels[index] = new JLabel(text_label.getKey());
             labels[index].setLabelFor(textFields[index]);
             index++;
         }
 
         return new Object[]{labels, textFields};
-
     }
+
+    private static JTextField[] input_variables_textfields;
+    private static JLabel [] input_variables_labels;
 
     private JSplitPane createTextFields() {
 
-        textfields.put("Numeric Variable: ", "30");
-        textfields.put("String Variable: ", "Hello World");
+        textfields_and_labels.put("Numeric Variable: ", "30");
+        textfields_and_labels.put("String Variable: ", "Hello World");
 
-//        textfield_numericVar = new JTextField();
-//        textfield_numericVar.setText(Double.toString(numeric_var));
-//        textfield_numericVar.addFocusListener(this);
-//
-//        textfield_stringVar = new JTextField();
-//        textfield_stringVar.setText(string_var);
-//        textfield_stringVar.addFocusListener(this);
-//
-//        JLabel numeric_variable_label = new JLabel("Numeric Variable: ");
-//        numeric_variable_label.setLabelFor(textfield_numericVar);
-//
-//        JLabel string_variable_label = new JLabel("String Variable: ");
-//        string_variable_label.setLabelFor(textfield_stringVar);
-
-        Object[]  labels_textfields = createAuxTextFields(textfields, textfield_labels);
+        Object[]  labels_and_textfields_list = createAuxTextFields(textfields_and_labels);
 
         JPanel input_variables_pane = new JPanel();
         GridBagLayout gridbag = new GridBagLayout();
@@ -190,9 +176,9 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         input_variables_pane.setPreferredSize(new Dimension(100, 900));
         input_variables_pane.setMinimumSize(new Dimension(100, 900));
 
-        JLabel[] input_variables_labels = (JLabel[]) labels_textfields[0];
+        input_variables_labels = (JLabel[]) labels_and_textfields_list[0];
 
-        JTextField[] input_variables_textfields = (JTextField[]) labels_textfields[1];
+        input_variables_textfields = (JTextField[]) labels_and_textfields_list[1];
 
         addLabelTextRows(input_variables_labels,input_variables_textfields,input_variables_pane);
 
@@ -326,7 +312,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             CanvasClassTemplate.objectNV.initializer(value);
             canvas_template.updateCanvas();
         }
-//
+
         if(e.getSource() == nav_bar.getMenu(1).getItem(0)){
             worker = new SwingWorker<Void, GuiTemplate>()
             {
@@ -401,11 +387,15 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     	//nothing
 	}
 	public void focusLost(FocusEvent e) {
-            String nump;
+        String nump;
+
+        if(e.getSource() == input_variables_textfields[0])
+            string_var = input_variables_textfields[0].getText();
+
             try {
                 double nump_value;
-                if (e.getSource() == textfield_numericVar) {
-                    nump = textfield_numericVar.getText();
+                if (e.getSource() == input_variables_textfields[1]) {
+                    nump = input_variables_textfields[1].getText();
                     nump_value = Double.parseDouble(nump);
                     if (nump.equals("") || (nump_value < 0 || nump_value >=1000)) {
                         numeric_var = 0;
@@ -422,8 +412,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                         JOptionPane.ERROR_MESSAGE);
             }
 
-            if(e.getSource() == textfield_stringVar)
-                string_var = textfield_stringVar.getText();
 
     }
     
