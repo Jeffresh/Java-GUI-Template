@@ -31,6 +31,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static JMenuBar nav_bar;
     private static GenericChart chart;
     private static String[] buttons_names = {"Initialize", "Start", "Stop"};
+    private static Map<String, JButton> gui_buttons = new HashMap<String, JButton>();
+    public static Map<String, String> textfields_and_labels = new HashMap<>();
 
 
     @NotNull
@@ -101,10 +103,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         return nav_bar;
     }
-    private static JTextField textfield_numericVar, textfield_stringVar;
 
-    private static JButton initialize_button, start_button, stop_button;
-    private static Map<String, JButton> gui_buttons = new HashMap<String, JButton>();
 
     private Map<String, JButton> create_buttons(String[] button_names){
 
@@ -120,7 +119,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         return buttons_dict;
     }
 
-    public static Map<String, String> textfields_and_labels = new HashMap<>();
 
     private JPanel createButtonsPane(){
 
@@ -283,17 +281,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     public void deleteCanvasLabels(@NotNull JLabel[] labels){
 
-        for(JLabel label: labels){
-            if(label_string_var_value !=null) canvas_template.remove(label);
-
-        }
-
-    }
-
-    public void deleteCanvasLabels(){
-        if(label_string_var_value !=null) canvas_template.remove(label_string_var_value);
         if(label_numeric_var_value !=null) canvas_template.remove(label_numeric_var_value);
-
+        if(label_string_var_value !=null) canvas_template.remove(label_string_var_value);
     }
 
     public void actionPerformed(@NotNull ActionEvent e) {
@@ -301,14 +290,14 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         if(e.getSource() == nav_bar.getMenu(0).getItem(0)) {
 //      frame.remove(window);
             value = 2;
-            deleteCanvasLabels();
+            deleteCanvasLabels(input_variables_labels);
             CanvasClassTemplate.objectNV.initializer(value);
             canvas_template.updateCanvas();
         }
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(1)) {
             value = 3;
-            deleteCanvasLabels();
+            deleteCanvasLabels(input_variables_labels);
             CanvasClassTemplate.objectNV.initializer(value);
             canvas_template.updateCanvas();
         }
@@ -349,16 +338,17 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         if(e.getSource() == gui_buttons.get(buttons_names[0])) {
 
-            deleteCanvasLabels();
+            deleteCanvasLabels(input_variables_labels);
             CanvasClassTemplate.objectNV = new ClassNV();
             CanvasClassTemplate.objectNV.plug(canvas_template);
             CanvasClassTemplate.objectNV.initializer(value);
 
-            label_numeric_var_value = new JLabel(Double.toString(numeric_var));
+
+            label_numeric_var_value = new JLabel(input_variables_textfields[0].getText());
             label_numeric_var_value.setFont(new Font(null, Font.PLAIN,50));
             canvas_template.add(label_numeric_var_value);
 
-            label_string_var_value = new JLabel(string_var);
+            label_string_var_value = new JLabel(input_variables_textfields[1].getText());
             label_string_var_value.setFont(new Font(null, Font.PLAIN,50));
             canvas_template.add(label_string_var_value);
             canvas_template.updateCanvas();
@@ -371,7 +361,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                 @Override
                 protected Void doInBackground() {
                     try{
-                        deleteCanvasLabels();
+                        deleteCanvasLabels(input_variables_labels);
                         CanvasClassTemplate.objectNV.computeClassNV((int)floor(numeric_var));
                     }
                     catch(Exception ex){System.out.println("Worker exception");}
@@ -389,8 +379,10 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 	public void focusLost(FocusEvent e) {
         String nump;
 
-        if(e.getSource() == input_variables_textfields[0])
+        if(e.getSource() == input_variables_textfields[0]) {
             string_var = input_variables_textfields[0].getText();
+            input_variables_textfields[0].setText(string_var);
+        }
 
             try {
                 double nump_value;
@@ -402,6 +394,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                         throw new Exception("Invalid Number");
                     }
                     numeric_var = nump_value;
+                    input_variables_textfields[1].setText(nump);
                 }
             }
             catch (Exception ex){
