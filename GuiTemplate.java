@@ -1,8 +1,6 @@
 import org.jetbrains.annotations.NotNull;
-
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,7 +10,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-
 import static java.lang.Math.floor;
 
 /**
@@ -33,7 +30,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static String[] buttons_names = {"Initialize", "Start", "Stop"};
     private static Map<String, JButton> gui_buttons = new HashMap<String, JButton>();
     public static Map<String, String> textfields_and_labels = new HashMap<>();
-
 
     @NotNull
     private JMenuBar createTopBar(Color color, Dimension dimension) {
@@ -104,7 +100,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         return nav_bar;
     }
 
-
     private Map<String, JButton> createButtons(String[] button_names){
 
         Map<String, JButton> buttons_dict = new HashMap<String, JButton>();
@@ -118,7 +113,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         return buttons_dict;
     }
-
 
     private JPanel createButtonsPane(){
 
@@ -342,7 +336,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             CanvasClassTemplate.objectNV.plug(canvas_template);
             CanvasClassTemplate.objectNV.initializer(value);
 
-
             label_numeric_var_value = new JLabel(input_variables_textfields[0].getText());
             label_numeric_var_value.setFont(new Font(null, Font.PLAIN,50));
             canvas_template.add(label_numeric_var_value);
@@ -403,8 +396,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                 JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
                         JOptionPane.ERROR_MESSAGE);
             }
-
-
     }
     
     public static void main(String[] args)
