@@ -233,6 +233,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         int yMax = 1000;
         canvas_template = new CanvasClassTemplate(xMax, yMax);
         canvas_template.setPreferredSize(new Dimension(1000, 1000));
+        chooseInputVariables(1,1,2);
 
 
         JSplitPane buttons = new GuiTemplate().createTextFields();
@@ -256,8 +257,20 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static CanvasClassTemplate canvas_template;
 
     private static double numeric_var = 33 ;
+    // vamos a generalizarlo
     private static String string_var = "Hello World";
     private static JLabel label_numeric_var_value;
+
+    private static void chooseInputVariables(int n_string_variables, int n_numeric_variables, int n_label_variables){
+        input_numeric_variables = new Double[n_numeric_variables];
+        input_string_variables = new String[n_string_variables];
+        input_label_variables = new JLabel[n_label_variables];
+    }
+
+    private static String[] input_string_variables;
+    private static Double[] input_numeric_variables;
+    private static JLabel[] input_label_variables;
+
     private static JLabel label_string_var_value;
     private static int value = 0;
 
