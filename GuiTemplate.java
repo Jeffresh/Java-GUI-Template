@@ -105,7 +105,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     }
 
 
-    private Map<String, JButton> create_buttons(String[] button_names){
+    private Map<String, JButton> createButtons(String[] button_names){
 
         Map<String, JButton> buttons_dict = new HashMap<String, JButton>();
         JButton button;
@@ -122,7 +122,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     private JPanel createButtonsPane(){
 
-        gui_buttons = create_buttons(buttons_names);
+        gui_buttons = createButtons(buttons_names);
         JPanel buttons_pane = new JPanel();
         for(String button_name: buttons_names)
             buttons_pane.add(gui_buttons.get(button_name), BorderLayout.CENTER);
@@ -187,17 +187,17 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
         JPanel buttons_pane = createButtonsPane();
 
-        JSplitPane control_center_panel = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+        JSplitPane control_center_pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                               input_variables_pane,
                                               buttons_pane);
-        control_center_panel.setMaximumSize(new Dimension(800,800));
-        control_center_panel.setMinimumSize(new Dimension(800,800));
+        control_center_pane.setMaximumSize(new Dimension(800,800));
+        control_center_pane.setMinimumSize(new Dimension(800,800));
         input_variables_pane.setMaximumSize(new Dimension(800,800));
         input_variables_pane.setMinimumSize(new Dimension(800,800));
 
-        control_center_panel.setOneTouchExpandable(true);
+        control_center_pane.setOneTouchExpandable(true);
 
-        return control_center_panel;
+        return control_center_pane;
     }    
 
     private void addLabelTextRows(JLabel[] labels, JTextField[] textFields,
@@ -262,7 +262,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static CanvasClassTemplate canvas_template;
 
     private static double numeric_var = 33 ;
-
     private static String string_var = "Hello World";
     private static JLabel label_numeric_var_value;
     private static JLabel label_string_var_value;
