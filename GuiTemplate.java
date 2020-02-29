@@ -71,7 +71,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         }
 
         return menus;
-
     }
 
     private JMenuBar createNavBar() {
@@ -131,7 +130,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                         BorderFactory.createEmptyBorder(5,5,5,5)));
 
         return buttons_pane;
-
     }
 
     private Object[] createTextFieldsAndLabels(Map<String, String> texts_labels){
@@ -233,7 +231,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         initializeButtonNames();
         initializeInputTextFieldsAndLabels();
 
-
         JFrame frame = new JFrame("Generic-Gui");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(500,500));
@@ -256,8 +253,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         frame.setContentPane(window);
         frame.validate();
         frame.repaint();
-
-
     }
 
     private static SwingWorker<Void,GuiTemplate> worker;
