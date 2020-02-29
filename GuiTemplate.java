@@ -27,7 +27,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     private static JMenuBar nav_bar;
     private static GenericChart chart;
-    private static String[] buttons_names = {"Initialize", "Start", "Stop"};
+    private static String[] buttons_names;
     private static Map<String, JButton> gui_buttons = new HashMap<String, JButton>();
     public static Map<String, String> textfields_and_labels = new HashMap<>();
 
@@ -134,7 +134,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     }
 
-    private Object[] createAuxTextFields(Map<String, String> texts_labels){
+    private Object[] createTextFieldsAndLabels(Map<String, String> texts_labels){
         JLabel[] labels = new JLabel[texts_labels.size()];
         JTextField[] textFields = new JTextField[texts_labels.size()];
         int index = 0;
@@ -154,16 +154,18 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static JTextField[] input_variables_textfields;
     private static JLabel [] input_variables_labels;
 
-    private static void initializeInputTextfieldsAndLabels(){
+    private static void initializeInputTextFieldsAndLabels(){
         textfields_and_labels.put("Numeric Variable: ", "30");
         textfields_and_labels.put("String Variable: ", "Hello World");
 
     }
+    private static void initializeButtonNames(){
+        buttons_names = new String[]{"Initialize", "Start", "Stop"};
+    }
 
-    private JSplitPane createTextFields() {
+    private JSplitPane createGuiPanels() {
 
-        initializeInputTextfieldsAndLabels();
-        Object[]  labels_and_textfields_list = createAuxTextFields(textfields_and_labels);
+        Object[]  labels_and_textfields_list = createTextFieldsAndLabels(textfields_and_labels);
 
         JPanel input_variables_pane = new JPanel();
         GridBagLayout gridbag = new GridBagLayout();
@@ -227,6 +229,11 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     private static  void createAndShowGUI(){
 
+        chooseInputVariables(1,1,2);
+        initializeButtonNames();
+        initializeInputTextFieldsAndLabels();
+
+
         JFrame frame = new JFrame("Generic-Gui");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(500,500));
@@ -236,10 +243,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         int yMax = 1000;
         canvas_template = new CanvasClassTemplate(xMax, yMax);
         canvas_template.setPreferredSize(new Dimension(1000, 1000));
-        chooseInputVariables(1,1,2);
 
-
-        JSplitPane buttons = new GuiTemplate().createTextFields();
+        JSplitPane buttons = new GuiTemplate().createGuiPanels();
         chart = new GenericChart();
 //        JSplitPane tools = new JSplitPane(JSplitPane.VERTICAL_SPLIT, buttons, chart.chartpanel);
 
