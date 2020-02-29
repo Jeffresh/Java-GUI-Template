@@ -154,11 +154,15 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static JTextField[] input_variables_textfields;
     private static JLabel [] input_variables_labels;
 
-    private JSplitPane createTextFields() {
-
+    private static void initializeInputTextfieldsAndLabels(){
         textfields_and_labels.put("Numeric Variable: ", "30");
         textfields_and_labels.put("String Variable: ", "Hello World");
 
+    }
+
+    private JSplitPane createTextFields() {
+
+        initializeInputTextfieldsAndLabels();
         Object[]  labels_and_textfields_list = createAuxTextFields(textfields_and_labels);
 
         JPanel input_variables_pane = new JPanel();
@@ -169,7 +173,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         input_variables_pane.setMinimumSize(new Dimension(100, 900));
 
         input_variables_labels = (JLabel[]) labels_and_textfields_list[0];
-
         input_variables_textfields = (JTextField[]) labels_and_textfields_list[1];
 
         addLabelTextRows(input_variables_labels,input_variables_textfields,input_variables_pane);
