@@ -16,7 +16,8 @@ public class GenericChart {
 
         phase = 0;
         double[][] initdata = getData(phase);
-        chart = QuickChart.getChart("Generic Chart", "Radians", "Sine", "sine", initdata[0], initdata[1]);
+        chart = QuickChart.getChart("Generic Chart", "Radians", "Sine",
+                "sine", initdata[0], initdata[1]);
         chartpanel = new XChartPanel(chart);
 
 

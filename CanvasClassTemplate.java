@@ -13,9 +13,8 @@ class CanvasClassTemplate extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-
     /** Object of the class that Needs Visualization (ONV)  */
-    public static ClassNV objectNV;
+    public static TaskTemplate task;
     public static BufferedImage image_ref;
     public static int xMax;
     public static int yMax;
@@ -25,12 +24,11 @@ class CanvasClassTemplate extends JPanel {
         this.repaint();
     }
 
-
     /** Constructor of the class that works as a link between the classNV and the GUI */
     public CanvasClassTemplate(int x_max, int y_max) {
 
-        objectNV = new ClassNV();
-        objectNV.plug(this);
+        task = new TaskTemplate();
+        task.plug(this);
         xMax = x_max;
         yMax = y_max;
 
@@ -48,7 +46,7 @@ class CanvasClassTemplate extends JPanel {
     private  BufferedImage GenerateImage() {
         Color color;
 
-        int[][] matrix = objectNV.getData();
+        int[][] matrix = task.getData();
 
         for(int x = 0; x < xMax; x++)
         {
@@ -78,7 +76,7 @@ class CanvasClassTemplate extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics g2 = (Graphics2D)g;
-        if(objectNV.getData()!=null)
+        if(task.getData()!=null)
             g2.drawImage(GenerateImage(),0,0,1000,1000,this);
 
     }

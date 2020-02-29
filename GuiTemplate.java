@@ -284,14 +284,14 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 //      frame.remove(window);
             value = 2;
             deleteCanvasLabels(input_variables_labels);
-            CanvasClassTemplate.objectNV.initializer(value);
+            CanvasClassTemplate.task.initializer(value);
             canvas_template.updateCanvas();
         }
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(1)) {
             value = 3;
             deleteCanvasLabels(input_variables_labels);
-            CanvasClassTemplate.objectNV.initializer(value);
+            CanvasClassTemplate.task.initializer(value);
             canvas_template.updateCanvas();
         }
 
@@ -326,15 +326,15 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         if(e.getSource()== gui_buttons.get(buttons_names[2])) {
             worker.cancel(true);
             worker.cancel(false);
-            ClassNV.stop();
+            TaskTemplate.stop();
         }
 
         if(e.getSource() == gui_buttons.get(buttons_names[0])) {
 
             deleteCanvasLabels(input_variables_labels);
-            CanvasClassTemplate.objectNV = new ClassNV();
-            CanvasClassTemplate.objectNV.plug(canvas_template);
-            CanvasClassTemplate.objectNV.initializer(value);
+            CanvasClassTemplate.task = new TaskTemplate();
+            CanvasClassTemplate.task.plug(canvas_template);
+            CanvasClassTemplate.task.initializer(value);
 
             label_numeric_var_value = new JLabel(input_variables_textfields[0].getText());
             label_numeric_var_value.setFont(new Font(null, Font.PLAIN,50));
@@ -354,7 +354,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                 protected Void doInBackground() {
                     try{
                         deleteCanvasLabels(input_variables_labels);
-                        CanvasClassTemplate.objectNV.computeClassNV((int)floor(numeric_var));
+                        CanvasClassTemplate.task.computeTask((int)floor(numeric_var));
                     }
                     catch(Exception ex){System.out.println("Worker exception");}
                     return null;

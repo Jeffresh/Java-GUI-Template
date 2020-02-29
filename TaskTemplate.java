@@ -6,7 +6,7 @@
      * @version: 1.0 23/07/19
      */
 
-public class ClassNV
+public class TaskTemplate
 {
 
     private static int[][] matrix;
@@ -34,14 +34,9 @@ public class ClassNV
         abort = true;
     }
 
-
-
-    public void computeClassNV(int line)
+    public void computeTask(int line)
     {
-
         abort = false;
-
-
 
         if(matrix[0][0]==2)
         {
@@ -63,10 +58,6 @@ public class ClassNV
 
             }
         }
-
-
-
-
 
     }
     
