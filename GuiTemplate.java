@@ -30,6 +30,11 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static String[] buttons_names;
     private static Map<String, JButton> gui_buttons = new HashMap<String, JButton>();
     public static Map<String, String> textfields_and_labels = new HashMap<>();
+    private static JComboBox<String>  generator_list_combo_box;
+    private static String[] comobox_options = {"Option 1", "Option 2", "Option 3", "Option 4",};
+    private static String combobox_value = "Option 1";
+
+
 
     @NotNull
     private JMenuBar createTopBar(Color color, Dimension dimension) {
@@ -151,11 +156,12 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     private static JTextField[] input_variables_textfields;
     private static JLabel [] input_variables_labels;
+    private static JLabel [] combobox_labels= {new JLabel("ComboBox Options")};
 
     private static void initializeInputTextFieldsAndLabels(){
         textfields_and_labels.put("Numeric Variable: ", "30");
         textfields_and_labels.put("String Variable: ", "Hello World");
-
+        combobox_labels[0].setLabelFor(generator_list_combo_box);
     }
     private static void initializeButtonNames(){
         buttons_names = new String[]{"Initialize", "Start", "Stop"};
@@ -163,7 +169,13 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     private JSplitPane createGuiPanels() {
 
+
         Object[]  labels_and_textfields_list = createTextFieldsAndLabels(textfields_and_labels);
+
+        generator_list_combo_box = new JComboBox<>(comobox_options);
+        generator_list_combo_box.addFocusListener(this);
+
+        JComboBox[] combo_box_list = {generator_list_combo_box};
 
         JPanel input_variables_pane = new JPanel();
         GridBagLayout gridbag = new GridBagLayout();
@@ -175,7 +187,7 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         input_variables_labels = (JLabel[]) labels_and_textfields_list[0];
         input_variables_textfields = (JTextField[]) labels_and_textfields_list[1];
 
-        addLabelTextRows(input_variables_labels,input_variables_textfields,input_variables_pane);
+        addLabelTextRows(input_variables_labels,input_variables_textfields, combobox_labels, combo_box_list, input_variables_pane);
 
         input_variables_pane.setBorder(
                                    BorderFactory.createCompoundBorder(
@@ -195,16 +207,15 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
         control_center_pane.setOneTouchExpandable(true);
 
         return control_center_pane;
-    }    
+    }
 
-    private void addLabelTextRows(JLabel[] labels, JTextField[] textFields,
-                                  //   JComboBox[] list,
+    private void addLabelTextRows(JLabel[] labels, JTextField[] textFields, JLabel[] combobox_labels, JComboBox<String>[] combo_box_list,
                                   Container container){
 
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.WEST;
         int numLabels = labels.length;
-        // int numlist = list.length;
+        int num_labels_combobox = combobox_labels.length;
 
         for (int i = 0; i < numLabels; i++){
 
@@ -213,7 +224,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
             c.fill = GridBagConstraints.NONE;      //reset to default
             c.weightx = 1.0;                       //reset to default
-//            c.gridheight = 19;
             container.add(labels[i], c);
  
             c.gridwidth = GridBagConstraints.REMAINDER;     //end row
@@ -222,7 +232,22 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
             textFields[i].setColumns(3);
             container.add(textFields[i], c);
         }
-        
+
+        for(int i =0; i < num_labels_combobox; i ++) {
+            GuiTemplate.combobox_labels[i].setFont(new Font(null, Font.PLAIN,20));
+            combo_box_list[i].setFont(new Font(null, Font.PLAIN,20));
+            ((JLabel)combo_box_list[i].getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+            c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
+            c.fill = GridBagConstraints.NONE;      //reset to default
+            c.weightx = 1.0;                       //reset to default
+            container.add(GuiTemplate.combobox_labels[i], c);
+
+            c.gridwidth = GridBagConstraints.REMAINDER;     //end row
+            c.fill = GridBagConstraints.NONE;
+            c.weightx = 1.0;
+            container.add(combo_box_list[i], c);
+        }
+
     }
 
     private static  void createAndShowGUI(){
@@ -260,7 +285,6 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
     private static CanvasClassTemplate canvas_template;
 
     private static double numeric_var = 33 ;
-    // vamos a generalizarlo
     private static String string_var = "Hello World";
     private static JLabel label_numeric_var_value;
 
@@ -290,8 +314,8 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
 
     public void deleteCanvasLabels(@NotNull JLabel[] labels){
 
-        if(label_numeric_var_value !=null) canvas_template.remove(label_numeric_var_value);
-        if(label_string_var_value !=null) canvas_template.remove(label_string_var_value);
+        if(label_numeric_var_value != null) canvas_template.remove(label_numeric_var_value);
+        if(label_string_var_value != null) canvas_template.remove(label_string_var_value);
     }
 
     public void actionPerformed(@NotNull ActionEvent e) {
@@ -412,6 +436,12 @@ public class GuiTemplate extends Frame implements ActionListener, FocusListener 
                 JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
                         JOptionPane.ERROR_MESSAGE);
             }
+        if(e.getSource() == generator_list_combo_box) {
+            JComboBox<String> cb = (JComboBox<String>)e.getSource();
+            String op = (String)cb.getSelectedItem();
+            assert op != null;
+            combobox_value = op;
+        }
     }
     
     public static void main(String[] args)
